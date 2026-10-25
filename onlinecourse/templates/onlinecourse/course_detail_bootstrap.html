@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,20 +7,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    ```
     <title>{{ course.name }} - Online Course</title>
 
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- JavaScript libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    ```
-
 </head>
 
 <body>
 
-    ```
     <!-- Navigation bar -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
@@ -45,9 +44,21 @@
                     <form class="form-inline" action="{% url 'onlinecourse:login' %}" method="post">
                         {% csrf_token %}
 
-                        <input type="text" class="form-control mr-2" placeholder="Username" name="username" required>
+                        <input
+                            type="text"
+                            class="form-control mr-2"
+                            placeholder="Username"
+                            name="username"
+                            required
+                        >
 
-                        <input type="password" class="form-control mr-2" placeholder="Password" name="psw" required>
+                        <input
+                            type="password"
+                            class="form-control mr-2"
+                            placeholder="Password"
+                            name="psw"
+                            required
+                        >
 
                         <button class="btn btn-primary mr-2" type="submit">
                             Login
@@ -64,7 +75,7 @@
         </div>
     </nav>
 
-    <!-- Course details and lessons -->
+    <!-- Course details and related lessons -->
     <div class="container-fluid mt-4">
 
         <!-- Display course name -->
@@ -95,10 +106,7 @@
 
         {% endfor %}
 
-        <!-- Assessment feature will be added in the following tasks -->
-
     </div>
-    ```
 
 </body>
 
