@@ -248,11 +248,14 @@ def show_exam_result(request, course_id, submission_id):
 
     selected_choices = submission.choices.all()
 
-    score = 0
-    total_questions = questions.count()
+    total_score = 0
+    possible_score = 0
     question_results = []
 
     for question in questions:
+        # Maximum marks available for this question.
+        possible_score += question.grade
+
         selected_for_question = selected_choices.filter(
             question=question
         )
@@ -275,23 +278,34 @@ def show_exam_result(request, course_id, submission_id):
             and selected_incorrect == 0
         )
 
-        if is_correct:
-            score += question.grade
+        # Award marks only when the answer is completely correct.
+        question_score = question.grade if is_correct else 0
+        total_score += question_score
 
         question_results.append({
             'question': question,
             'selected_choices': selected_for_question,
             'correct_choices': correct_choices,
             'is_correct': is_correct,
+            'question_score': question_score,
         })
+
+    # Calculate the grade percentage.
+    if possible_score > 0:
+        grade = (total_score / possible_score) * 100
+    else:
+        grade = 0
 
     context = {
         'course': course,
         'submission': submission,
         'question_results': question_results,
-        'score': score,
-        'total_questions': total_questions,
-        'passed': total_questions > 0 and score > 0,
+        'total_score': total_score,
+        'possible_score': possible_score,
+        'score': total_score,
+        'grade': grade,
+        'total_questions': questions.count(),
+        'passed': possible_score > 0 and total_score > 0,
     }
 
     return render(
